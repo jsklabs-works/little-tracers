@@ -10,6 +10,10 @@
   text-align: left;
 }
 
+.page-header .mode-toggle {
+  margin-bottom: 24px;
+}
+
 .page-header h1 {
   margin: 0 0 8px;
   font-size: 32px;
@@ -156,4 +160,57 @@
   gap: 12px;
   border-top: 1px solid var(--border);
   padding-top: 16px;
+}
+
+.trace-char.wide {
+  width: auto;
+  padding: 0 14px;
+  font-size: 15px;
+}
+
+.trace-legend {
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+
+.trace-legend .dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.trace-legend .dot.start {
+  background: #22a050;
+}
+
+.trace-legend .dot.end {
+  background: #dc3c3c;
+}
+
+.trace-colours {
+  flex-wrap: wrap;
+}
+
+.trace-colour.eraser {
+  background: #fff;
+  color: #444;
+  font-size: 15px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The line art is opaque white with black outlines; multiply lets the colours underneath show through the white. */
+.colour-stage .colour-lines {
+  mix-blend-mode: multiply;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.preview-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

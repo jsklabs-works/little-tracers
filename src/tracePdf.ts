@@ -1,9 +1,7 @@
 import { jsPDF } from "jspdf";
+import { MARGIN, PAGE_WIDTH, CONTENT_WIDTH, drawFooter, drawHeader } from "./pdfCommon";
 import { midLineRatio } from "./trace";
 
-const PAGE_WIDTH = 210;
-const MARGIN = 15;
-const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
 const FIRST_ROW_Y = 40;
 const ROW_PITCH = 34;
 const ROWS = 7;
@@ -12,7 +10,6 @@ const CELL_WIDTH = CONTENT_WIDTH / CELLS_PER_ROW;
 /** Height of a capital letter in mm; the font size is derived from it (Helvetica cap height is ~0.716 em). */
 const CAP_HEIGHT_MM = 20;
 const FONT_SIZE_PT = CAP_HEIGHT_MM / 0.716 / 0.3528;
-const FOOTER_TEXT = "Little Tracers (c) 2026 jsklabs-works. For personal and classroom use.";
 
 /** How many dotted copies each row shows; the rest of the row is left blank for free writing. */
 function tracedCells(row: number): number {
@@ -37,17 +34,7 @@ function drawGuides(doc: jsPDF, y: number, char: string): void {
 }
 
 function drawPage(doc: jsPDF, char: string): void {
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(16);
-  doc.setTextColor(30);
-  doc.text(`Trace the ${/\d/.test(char) ? "number" : "letter"} ${char}`, MARGIN, 22);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(11);
-  doc.setTextColor(90);
-  doc.text("Name:", PAGE_WIDTH - MARGIN - 70, 22);
-  doc.setDrawColor(150);
-  doc.setLineWidth(0.25);
-  doc.line(PAGE_WIDTH - MARGIN - 56, 22, PAGE_WIDTH - MARGIN, 22);
+  drawHeader(doc, `Trace the ${/\d/.test(char) ? "number" : "letter"} ${char}`);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(FONT_SIZE_PT);
@@ -79,10 +66,7 @@ function drawPage(doc: jsPDF, char: string): void {
     doc.setLineDashPattern([], 0);
   }
 
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(120);
-  doc.text(FOOTER_TEXT, PAGE_WIDTH / 2, 289, { align: "center" });
+  drawFooter(doc);
 }
 
 /** Builds a tracing worksheet with one page per character and returns it for saving. */
